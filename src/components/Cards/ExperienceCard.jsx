@@ -62,7 +62,6 @@ const Card = styled.div`
     &:hover ${Span}{
         overflow: visible;
         -webkit-line-clamp: unset;
-
     }
 
     border: 0.1px solid #306EE8;

@@ -1,20 +1,26 @@
 import React from 'react'
-import { Nav, NavLink, NavbarContainer, Span, NavLogo, NavItems, GitHubButton, ButtonContainer, MobileIcon, MobileMenu, MobileNavLogo, MobileLink } from './NavbarStyledComponent'
-import { DiCssdeck } from 'react-icons/di';
+import { Nav, NavLink, NavbarContainer, Span, NavLogo, NavItems, GitHubButton, DarkModeButton,ButtonContainer, MobileIcon, MobileMenu, MobileNavLogo, MobileLink } from './NavbarStyledComponent'
+import { DiIonic } from 'react-icons/di';
 import { FaBars } from 'react-icons/fa';
 import { Bio } from '../../data/constants';
-import { Close, CloseRounded } from '@mui/icons-material';
 import { useTheme } from 'styled-components';
+import { FaSun, FaMoon, FaGithub } from 'react-icons/fa';
+import { darkTheme } from '../../utils/Themes.js'
 
-const Navbar = () => {
+const Navbar = ({darkMode, setDarkMode}) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const theme = useTheme()
+
+  const darkModeClick = () => {
+    darkMode ? setDarkMode(false): setDarkMode(true);
+  };
+
   return (
     <Nav>
       <NavbarContainer>
         <NavLogo to='/'>
           <a style={{ display: "flex", alignItems: "center", color: "white", marginBottom: '20;', cursor: 'pointer' }}>
-            <DiCssdeck size="3rem" /> <Span>Portfolio</Span>
+            <DiIonic size="3rem" color={theme.text_primary} /> <Span>Portfolio</Span>
           </a>
         </NavLogo>
         <MobileIcon>
@@ -28,9 +34,11 @@ const Navbar = () => {
           <NavLink href='#experience'>Experience</NavLink>
           <NavLink href='#projects'>Projects</NavLink>
           <NavLink href='#education'>Education</NavLink>
+          <NavLink href='#contact'>Contact</NavLink>
         </NavItems>
         <ButtonContainer>
-          <GitHubButton href={Bio.github} target="_blank">Github Profile</GitHubButton>
+          <GitHubButton href={Bio.github} target="_blank"> <FaGithub size="1.4em"/> </GitHubButton>
+          <DarkModeButton onClick={darkModeClick}>{theme === darkTheme ? <FaSun size="1.4em"/> : <FaMoon size="1.4em"/> }</DarkModeButton>
         </ButtonContainer>
         {
           isOpen &&
@@ -50,7 +58,9 @@ const Navbar = () => {
             <MobileLink href='#education' onClick={() => {
               setIsOpen(!isOpen)
             }}>Education</MobileLink>
-            <GitHubButton style={{padding: '10px 16px',background: `${theme.primary}`, color: 'white',width: 'max-content'}} href={Bio.github} target="_blank">Github Profile</GitHubButton>
+            <MobileLink href='#contact' onClick={() => {
+              setIsOpen(!isOpen)
+            }}>Contact</MobileLink>
           </MobileMenu>
         }
       </NavbarContainer>
